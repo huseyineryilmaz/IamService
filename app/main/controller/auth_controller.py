@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from ..service.user_service import register, login
+from ..service.auth_service import register, login
 
 class Register(Resource):
     def post(self):
