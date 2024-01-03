@@ -20,11 +20,10 @@ def login(request):
         data = request.get_json()
         email = data['email']
         password = data['password'].encode('utf-8')
-        for user in User.objects(email=email):
-            if bcrypt.checkpw(password, user.password.encode('utf-8')):
-                return {'success': True, 'message': 'Login succeed.'}
-            else:
-                return {'success': False, 'message': 'Login failed.'}
-        return {'success': False, 'message': 'Login failed.'}
+        user = User.objects(email=email)
+        if user and bcrypt.checkpw(password, user.password.encode('utf-8')):
+            return {'success': True, 'message': 'Login succeed.'}
+        else:
+            return {'success': False, 'message': 'Login failed.'}
     except Exception as e:
         return {'success': False, 'Exception': e.args}
