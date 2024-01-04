@@ -27,3 +27,10 @@ def login(request):
             return {'success': False, 'message': 'Login failed.'}
     except Exception as e:
         return {'success': False, 'Exception': e.args}
+def refresh():
+    current_user = get_jwt_identity()
+    return {'access_token': create_access_token(identity=current_user)}, 200
+
+def protected():
+    current_user = get_jwt_identity()
+    return {'logged_in_as': current_user}, 200
